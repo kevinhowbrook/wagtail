@@ -551,24 +551,20 @@ class ChildObjectComparison:
         return comparisons
 
     def has_changed(self):
-        for comparison in self.get_field_comparisons():
-            if comparison.has_changed():
-                return True
-
-        return False
+        return any(
+            comparison.has_changed() for comparison in self.get_field_comparisons()
+        )
 
     def get_num_differences(self):
         """
         Returns the number of fields that differ between the two
         objects.
         """
-        num_differences = 0
-
-        for comparison in self.get_field_comparisons():
-            if comparison.has_changed():
-                num_differences += 1
-
-        return num_differences
+        return sum(
+            1
+            for comparison in self.get_field_comparisons()
+            if comparison.has_changed()
+        )
 
 
 class TextDiff:
@@ -580,9 +576,7 @@ class TextDiff:
         html = []
 
         for change_type, value in self.changes:
-            if change_type == 'equal':
-                html.append(escape(value))
-            elif change_type == 'addition':
+            if change_type == 'addition':
                 html.append('<{tag} class="{classname}">{value}</{tag}>'.format(
                     tag=tag,
                     classname=addition_class,
@@ -595,6 +589,8 @@ class TextDiff:
                     value=escape(value)
                 ))
 
+            elif change_type == 'equal':
+                html.append(escape(value))
         return mark_safe(self.separator.join(html))
 
 

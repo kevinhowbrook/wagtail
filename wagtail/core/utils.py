@@ -116,9 +116,7 @@ def safe_snake_case(value):
 
     slugified_ascii_string = cautious_slugify(value)
 
-    snake_case_string = slugified_ascii_string.replace("-", "_")
-
-    return snake_case_string
+    return slugified_ascii_string.replace("-", "_")
 
 
 def accepts_kwarg(func, kwarg):

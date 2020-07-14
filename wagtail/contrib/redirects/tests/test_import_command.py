@@ -26,10 +26,10 @@ class TestImportCommand(TestCase):
             call_command("import_redirects", src="random", stdout=out)
 
     def test_invalid_extension_raises_error(self):
-        f = "{}/files/example.numbers".format(TEST_ROOT)
-
         with self.assertRaisesMessage(Exception, "Invalid format 'numbers'"):
             out = StringIO()
+            f = "{}/files/example.numbers".format(TEST_ROOT)
+
             call_command("import_redirects", src=f, stdout=out)
 
     def test_empty_file_raises_error(self):
