@@ -35,20 +35,20 @@ def base_form_class_check(app_configs, **kwargs):
     from wagtail.admin.forms import WagtailAdminPageForm
     from wagtail.core.models import get_page_models
 
-    errors = []
-
-    for cls in get_page_models():
-        if not issubclass(cls.base_form_class, WagtailAdminPageForm):
-            errors.append(Error(
-                "{}.base_form_class does not extend WagtailAdminPageForm".format(
-                    cls.__name__),
-                hint="Ensure that {}.{} extends WagtailAdminPageForm".format(
-                    cls.base_form_class.__module__,
-                    cls.base_form_class.__name__),
-                obj=cls,
-                id='wagtailadmin.E001'))
-
-    return errors
+    return [
+        Error(
+            "{}.base_form_class does not extend WagtailAdminPageForm".format(
+                cls.__name__
+            ),
+            hint="Ensure that {}.{} extends WagtailAdminPageForm".format(
+                cls.base_form_class.__module__, cls.base_form_class.__name__
+            ),
+            obj=cls,
+            id='wagtailadmin.E001',
+        )
+        for cls in get_page_models()
+        if not issubclass(cls.base_form_class, WagtailAdminPageForm)
+    ]
 
 
 @register()
