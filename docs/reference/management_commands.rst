@@ -35,7 +35,7 @@ move_pages
 
 .. code-block:: console
 
-    $ manage.py move_pages from to
+    $ ./manage.py move_pages from to
 
 This command moves a selection of pages from one section of the tree to another.
 
@@ -55,7 +55,7 @@ purge_revisions
 
 .. code-block:: console
 
-    $ manage.py purge_revisions [--days=<number of days>]
+    $ ./manage.py purge_revisions [--days=<number of days>]
 
 This command deletes old page revisions which are not in moderation, live, approved to go live, or the latest
 revision for a page. If the ``days`` argument is supplied, only revisions older than the specified number of
